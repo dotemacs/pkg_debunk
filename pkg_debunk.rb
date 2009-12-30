@@ -23,8 +23,9 @@ def debunk(arg)
 
     if File.exists?(pkg)
       contents = File.new(pkg, "r").collect
-      #puts "grep: #{contents[3].grep(/@cwd/)}"
+      # puts "grep: #{contents[3].grep(/@cwd/)}"
       prefix = contents[3].grep(/@cwd\ /).to_s.gsub(/\@cwd\ /, "").chomp
+
       missing = []
 
       contents.each { |line|
@@ -38,9 +39,9 @@ def debunk(arg)
       }
 
       if not missing.empty?
-        puts "package: #{arg}"
+        puts "#{arg}:"
         missing.each {|m|
-          puts "  not found: #{m}"
+          puts "  missing #{m}"
         }
       end
 
