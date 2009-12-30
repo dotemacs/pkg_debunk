@@ -13,7 +13,12 @@ end
 # puts "package: #{ARGV[0]}"
 
 def debunk(arg) 
-  db="/var/db/pkg/"
+
+  if not "#{ENV['PKG_DBDIR']}".empty? 
+    db = "#{ENV['PKG_DBDIR']}".chomp
+  else
+    db="/var/db/pkg/"
+  end
 
   # puts "from the method, db: #{db}, prefix: #{$prefix}, arg: #{arg}"
 
