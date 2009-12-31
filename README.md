@@ -1,14 +1,20 @@
 Verify the installed ports/packages
 ======================================
 
-Run:
+To test all the installed packages run it with no arguments:
 
-    for i in $(ls /var/db/pkg)
-    do
-       pkg_debunk.rb ${i}
-    end
 
-will return the names of packages which have their files missing e.g.
+       ./pkg_debunk.rb 
+
+
+Or for a particular package provide it as a argument:
+
+
+       ./pkg_debunk.rb ca_root_nss-3.12.4
+
+
+The results will look like this, displaying the package names and
+their missing files:
 
     ca_root_nss-3.12.4 ca_root_nss-3.12.4:
       missing /usr/local/etc/ssl/cert.pem
