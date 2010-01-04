@@ -3,7 +3,7 @@
 
 # pkg_debunk.rb used to verify installed packages by FreeBSD ports
 # 
-# by Aleksandar Simic 31 December 2009
+# by Aleksandar Simic 4 January 2010
 
 if ARGV.size > 1
   puts
