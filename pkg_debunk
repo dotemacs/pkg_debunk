@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# -*- ruby -*- 
 
 # pkg_debunk.rb used to verify installed packages by FreeBSD ports
 # 
@@ -12,17 +13,28 @@ if ARGV.size > 1
   exit
 end
 
+def get_prefix(line)
+  return line.to_s.gsub(/\@cwd\ /, "").chomp
+end
+
 def verify(pkg, path)
   # puts "path is #{path}"
   contents = File.new(path, "r").collect
   # puts "grep: #{contents.grep(/@cwd/)}"
   # prefix = contents[3].grep(/@cwd\ /).to_s.gsub(/\@cwd\ /, "").chomp
-  prefix = contents[3].to_s.gsub(/\@cwd\ /, "").chomp
+  # prefix = contents[3].to_s.gsub(/\@cwd\ /, "").chomp
+  prefix = get_prefix(contents[3])
   # puts "prefix is: #{prefix}"
 
   missing = []
 
   contents.each { |line|
+
+    # if line.to_s =~ /(@[^(cwd)]|\+).*/
+    if line.to_s =~ /^\@cwd.*/
+      prefix = get_prefix(line)
+    end
+
     if not line.to_s =~ /^[@\+]/
       path = [prefix, line.chomp].join "/"
       #puts "path is .#{path}."
