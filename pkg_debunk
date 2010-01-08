@@ -3,7 +3,7 @@
 
 # pkg_debunk.rb used to verify installed packages by FreeBSD ports
 # 
-# by Aleksandar Simic 4 January 2010
+# by Aleksandar Simic 8 January 2010
 
 if ARGV.size > 1
   puts
@@ -31,7 +31,7 @@ def verify(pkg, path)
   contents.each { |line|
 
     # if line.to_s =~ /(@[^(cwd)]|\+).*/
-    if line.to_s =~ /^\@cwd.*/
+    if line.to_s =~ /^\@cw?d\s([\/\w]+)/
       prefix = get_prefix(line)
     end
 
@@ -72,8 +72,6 @@ def debunk(*arg)
 
   if arg.flatten.to_s.size > 0
 
-    puts "arg not empty"
-
     if not File.directory?([db, arg].join)
       #if not File.directory?([db, ARGV[0]].join)
       puts "can't find package #{arg}, exiting..."
@@ -90,7 +88,6 @@ def debunk(*arg)
 
   else
 
-    puts "arg blank"
     Dir.open(db) do |dir|
       # puts "the dirs are #{dir}"
       dir.each do |pkg|
